@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .api import router
+
 app = FastAPI(
     title="Genetic Algorithm Equation Solver API",
     version="1.0.0",
-    description="API giải phương trình toán học sử dụng Giải thuật Di truyền (GA)"
+    description="API giải phương trình toán học sử dụng Giải thuật Di truyền (GA)",
 )
 
 # Cấu hình CORS cho phép React frontend kết nối
@@ -15,6 +17,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(router)
+
 
 @app.get("/")
 def read_root():
