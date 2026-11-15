@@ -240,6 +240,7 @@ GAsol/
   * Cài đặt môi trường Python, viết module xử lý chuỗi phương trình bằng SymPy.
   * Lập trình các toán tử di truyền (Khởi tạo, Fitness, Chọn lọc, Lai ghép, Đột biến) bằng NumPy.
   * Chạy thử nghiệm thuật toán trên Terminal.
+  * Kiểm thử engine bằng `python -m unittest discover -s tests -v` từ thư mục `backend`.
 * **Phase 2: Xây dựng RESTful API (Backend)**
   * Định nghĩa Pydantic Schemas.
   * Tạo các API endpoints bằng FastAPI kết nối với Core GA Engine.
