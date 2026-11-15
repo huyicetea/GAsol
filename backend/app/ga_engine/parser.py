@@ -2,7 +2,7 @@ import ast
 import math
 import operator
 from dataclasses import dataclass
-from typing import Callable
+from typing import Any, Callable
 
 import numpy as np
 import sympy as sp
@@ -12,7 +12,7 @@ class EquationParseError(ValueError):
     """Raised when an equation is not a supported mathematical expression."""
 
 
-_FUNCTIONS: dict[str, Callable[..., sp.Expr]] = {
+_FUNCTIONS: dict[str, Callable[..., Any]] = {
     "abs": sp.Abs,
     "acos": sp.acos,
     "asin": sp.asin,
@@ -31,14 +31,14 @@ _FUNCTIONS: dict[str, Callable[..., sp.Expr]] = {
     "tanh": sp.tanh,
 }
 _CONSTANTS = {"E": sp.E, "pi": sp.pi}
-_BINARY_OPERATORS: dict[type[ast.operator], Callable[[sp.Expr, sp.Expr], sp.Expr]] = {
+_BINARY_OPERATORS: dict[type[ast.operator], Callable[[Any, Any], Any]] = {
     ast.Add: operator.add,
     ast.Sub: operator.sub,
     ast.Mult: operator.mul,
     ast.Div: operator.truediv,
     ast.Pow: operator.pow,
 }
-_UNARY_OPERATORS: dict[type[ast.unaryop], Callable[[sp.Expr], sp.Expr]] = {
+_UNARY_OPERATORS: dict[type[ast.unaryop], Callable[[Any], Any]] = {
     ast.UAdd: operator.pos,
     ast.USub: operator.neg,
 }
@@ -82,7 +82,7 @@ class _ExpressionBuilder:
     def __init__(self) -> None:
         self.symbols: dict[str, sp.Symbol] = {}
 
-    def build(self, node: ast.AST) -> sp.Expr:
+    def build(self, node: ast.AST) -> Any:
         if isinstance(node, ast.Expression):
             return self.build(node.body)
         if isinstance(node, ast.Constant):
@@ -138,7 +138,7 @@ def parse_equation(equation: str) -> ParsedEquation:
 
     builder = _ExpressionBuilder()
     try:
-        expression = builder.build(left_tree) - builder.build(right_tree)
+        expression: Any = builder.build(left_tree) - builder.build(right_tree)
     except (TypeError, ValueError, ZeroDivisionError) as exc:
         raise EquationParseError("Biểu thức toán học không hợp lệ.") from exc
     variables = tuple(sorted(builder.symbols))
