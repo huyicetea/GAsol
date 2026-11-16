@@ -1,1 +1,41 @@
-@import "tailwindcss";  
+/* GAsol – Global CSS
+ * Tailwind v4 được load qua @tailwindcss/vite plugin.
+ * Thêm custom styles bên dưới nếu cần.
+ */
+@import "tailwindcss";
+
+/* Smooth scrollbar cho dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Range input cross-browser */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #6366f1;
+  cursor: pointer;
+  border: 2px solid #818cf8;
+}
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #6366f1;
+  cursor: pointer;
+  border: 2px solid #818cf8;
+}
